@@ -1,0 +1,11 @@
+# Never commit your secret API key
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment folder (if you create one)
+venv/
+env/

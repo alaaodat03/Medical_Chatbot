@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "ar_greetings",
+      "language": "ar-JO",
+      "title": "Jordanian Greetings",
+      "title_native": "تحيات أردنية",
+      "icon": "👋",
+      "description": "Everyday hello / how-are-you in Jordanian dialect",
+      "phrases": [
+        { "id": "ar_g_1", "target": "مرحبا، كيفك؟",            "translation": "Hi, how are you?",              "transliteration": "Marhaba, kifak?" },
+        { "id": "ar_g_2", "target": "الحمد لله، تمام",          "translation": "Thank God, I'm good",           "transliteration": "Alhamdulillah, tamam" },
+        { "id": "ar_g_3", "target": "شو أخبارك؟",               "translation": "What's up?",                    "transliteration": "Shu akhbarak?" },
+        { "id": "ar_g_4", "target": "تشرفنا",                   "translation": "Nice to meet you",              "transliteration": "Tsharafna" },
+        { "id": "ar_g_5", "target": "أهلا وسهلا",                "translation": "Welcome",                       "transliteration": "Ahlan wa sahlan" },
+        { "id": "ar_g_6", "target": "يعطيك العافية",             "translation": "May God give you strength",     "transliteration": "Ya'tik el-'afyeh" },
+        { "id": "ar_g_7", "target": "بخاطرك",                   "translation": "Goodbye (with your permission)","transliteration": "Bi-khatrak" }
+      ]
+    },
+    {
+      "id": "ar_food",
+      "language": "ar-JO",
+      "title": "Food & Drink",
+      "title_native": "أكل وشرب",
+      "icon": "🍽️",
+      "description": "Order food and drinks like a local",
+      "phrases": [
+        { "id": "ar_f_1", "target": "بدّي مَنسف",                "translation": "I want mansaf",                 "transliteration": "Biddi mansaf" },
+        { "id": "ar_f_2", "target": "كأس شاي لو سمحت",          "translation": "A glass of tea, please",        "transliteration": "Ka's shai law samaht" },
+        { "id": "ar_f_3", "target": "هاد الأكل لذيذ كتير",       "translation": "This food is very tasty",       "transliteration": "Had el-akel laziz kteer" },
+        { "id": "ar_f_4", "target": "ممكن الحساب؟",             "translation": "Can I have the bill?",          "transliteration": "Mumkin el-hsab?" },
+        { "id": "ar_f_5", "target": "أنا جوعان",                "translation": "I'm hungry",                    "transliteration": "Ana jou'aan" },
+        { "id": "ar_f_6", "target": "بدّي قهوة سادة",           "translation": "I want coffee, no sugar",       "transliteration": "Biddi qahweh sadeh" }
+      ]
+    },
+    {
+      "id": "ar_family",
+      "language": "ar-JO",
+      "title": "Family",
+      "title_native": "العيلة",
+      "icon": "👨‍👩‍👧",
+      "description": "Talk about parents, siblings, kids",
+      "phrases": [
+        { "id": "ar_fa_1", "target": "هاي إمي",                  "translation": "This is my mom",                "transliteration": "Hayy ummi" },
+        { "id": "ar_fa_2", "target": "أبوي بشتغل دكتور",         "translation": "My dad works as a doctor",      "transliteration": "Abouy bishtaghil duktoor" },
+        { "id": "ar_fa_3", "target": "عندي أخ وأخت",             "translation": "I have a brother and a sister", "transliteration": "Indi akh w ukht" },
+        { "id": "ar_fa_4", "target": "قديش عمر ابنك؟",           "translation": "How old is your son?",          "transliteration": "Adesh 'omr ibnak?" },
+        { "id": "ar_fa_5", "target": "كلهم بالبيت",              "translation": "They're all at home",           "transliteration": "Kollhom bil-beit" }
+      ]
+    },
+    {
+      "id": "ar_medical",
+      "language": "ar-JO",
+      "title": "At the Doctor",
+      "title_native": "عند الدكتور",
+      "icon": "🩺",
+      "description": "Describe symptoms in Jordanian Arabic",
+      "phrases": [
+        { "id": "ar_m_1", "target": "عندي صداع",                 "translation": "I have a headache",             "transliteration": "Indi sudaa'" },
+        { "id": "ar_m_2", "target": "بطني بوجعني",               "translation": "My stomach hurts",              "transliteration": "Batni boj'aani" },
+        { "id": "ar_m_3", "target": "حاسس بدوخة",               "translation": "I feel dizzy",                  "transliteration": "Hases bi-dawkha" },
+        { "id": "ar_m_4", "target": "بدّي أروح عند الدكتور",     "translation": "I want to go to the doctor",    "transliteration": "Biddi arouh 'and ed-duktoor" },
+        { "id": "ar_m_5", "target": "ما بقدر أنام",              "translation": "I can't sleep",                 "transliteration": "Ma baqdar anam" },
+        { "id": "ar_m_6", "target": "حرارتي عالية",              "translation": "I have a fever",                "transliteration": "Hararti 'aliyeh" }
+      ]
+    },
+    {
+      "id": "ar_travel",
+      "language": "ar-JO",
+      "title": "Travel & Directions",
+      "title_native": "سفر واتجاهات",
+      "icon": "🚖",
+      "description": "Get around Amman like a local",
+      "phrases": [
+        { "id": "ar_t_1", "target": "وين أقرب محطة باص؟",        "translation": "Where's the nearest bus stop?", "transliteration": "Wein aqrab mahattat baas?" },
+        { "id": "ar_t_2", "target": "بدّي تاكسي عالمطار",        "translation": "I want a taxi to the airport",  "transliteration": "Biddi taxi 'al-matar" },
+        { "id": "ar_t_3", "target": "قديش الأجرة؟",              "translation": "How much is the fare?",         "transliteration": "Adesh el-ojra?" },
+        { "id": "ar_t_4", "target": "روح دغري ولف يمين",         "translation": "Go straight then turn right",   "transliteration": "Rouh dughri w lif yameen" },
+        { "id": "ar_t_5", "target": "ضايع، ساعدني",              "translation": "I'm lost, help me",             "transliteration": "Day'aa, sa'idni" }
+      ]
+    },
+    {
+      "id": "ar_work",
+      "language": "ar-JO",
+      "title": "Work & School",
+      "title_native": "شغل ودراسة",
+      "icon": "💼",
+      "description": "Daily life at work or university",
+      "phrases": [
+        { "id": "ar_w_1", "target": "هلأ بشتغل",                 "translation": "I'm working now",               "transliteration": "Hala' bashtaghil" },
+        { "id": "ar_w_2", "target": "الاجتماع الساعة عشرة",      "translation": "The meeting is at ten",         "transliteration": "El-ijtimaa' es-sa'a 'ashra" },
+        { "id": "ar_w_3", "target": "بدرس بالجامعة الأردنية",    "translation": "I study at University of Jordan","transliteration": "Badrus bil-Jami'a el-Urduniyyeh" },
+        { "id": "ar_w_4", "target": "خلصت الواجب",               "translation": "I finished the homework",       "transliteration": "Khallast el-wajeb" },
+        { "id": "ar_w_5", "target": "تعبت اليوم",                "translation": "I'm tired today",               "transliteration": "Ti'ibt el-yom" }
+      ]
+    },
+
+    {
+      "id": "en_greetings",
+      "language": "en-US",
+      "title": "American Greetings",
+      "title_native": "تحيات أمريكية",
+      "icon": "🇺🇸",
+      "description": "Sound natural in everyday English hellos",
+      "phrases": [
+        { "id": "en_g_1", "target": "Hi, how are you doing today?", "translation": "مرحبا، كيفك اليوم؟",      "transliteration": "" },
+        { "id": "en_g_2", "target": "Nice to meet you",             "translation": "تشرفت بمعرفتك",           "transliteration": "" },
+        { "id": "en_g_3", "target": "Have a great day",             "translation": "نهارك سعيد",              "transliteration": "" },
+        { "id": "en_g_4", "target": "What have you been up to?",    "translation": "شو كنت عم تعمل؟",         "transliteration": "" },
+        { "id": "en_g_5", "target": "Take care, see you later",     "translation": "دير بالك، بشوفك بعدين",   "transliteration": "" }
+      ]
+    },
+    {
+      "id": "en_food",
+      "language": "en-US",
+      "title": "Food & Restaurants",
+      "title_native": "أكل ومطاعم",
+      "icon": "🥗",
+      "description": "Order food and drinks confidently",
+      "phrases": [
+        { "id": "en_f_1", "target": "I'd like a coffee, please",    "translation": "بدّي قهوة، لو سمحت",      "transliteration": "" },
+        { "id": "en_f_2", "target": "Can I see the menu?",          "translation": "ممكن أشوف المنيو؟",       "transliteration": "" },
+        { "id": "en_f_3", "target": "This is delicious",            "translation": "هاد طعمه لذيذ",          "transliteration": "" },
+        { "id": "en_f_4", "target": "Could I get the check?",       "translation": "ممكن الحساب؟",           "transliteration": "" },
+        { "id": "en_f_5", "target": "I'm allergic to peanuts",      "translation": "عندي حساسية من الفول السوداني","transliteration": "" }
+      ]
+    },
+    {
+      "id": "en_medical",
+      "language": "en-US",
+      "title": "At the Doctor (English)",
+      "title_native": "عند الدكتور (إنجليزي)",
+      "icon": "💊",
+      "description": "Describe symptoms in clear English",
+      "phrases": [
+        { "id": "en_m_1", "target": "I have a headache",            "translation": "عندي صداع",              "transliteration": "" },
+        { "id": "en_m_2", "target": "My stomach hurts",             "translation": "بطني بوجعني",            "transliteration": "" },
+        { "id": "en_m_3", "target": "I feel dizzy and tired",       "translation": "حاسس بدوخة وتعب",        "transliteration": "" },
+        { "id": "en_m_4", "target": "I need to see a doctor",       "translation": "لازم أشوف دكتور",        "transliteration": "" },
+        { "id": "en_m_5", "target": "I can't sleep at night",       "translation": "ما بقدر أنام بالليل",    "transliteration": "" }
+      ]
+    },
+    {
+      "id": "en_travel",
+      "language": "en-US",
+      "title": "Travel & Directions",
+      "title_native": "سفر واتجاهات (إنجليزي)",
+      "icon": "✈️",
+      "description": "Navigate airports and cities in English",
+      "phrases": [
+        { "id": "en_t_1", "target": "Where is the nearest hotel?",  "translation": "وين أقرب فندق؟",         "transliteration": "" },
+        { "id": "en_t_2", "target": "I'd like a taxi to the airport","translation": "بدّي تاكسي عالمطار",   "transliteration": "" },
+        { "id": "en_t_3", "target": "How much does this cost?",     "translation": "قديش هاد بكلف؟",         "transliteration": "" },
+        { "id": "en_t_4", "target": "Could you repeat that, please?","translation": "ممكن تعيد، لو سمحت؟",  "transliteration": "" }
+      ]
+    }
+  ]
+}

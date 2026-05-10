@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>SpeakUp — Pronunciation Coach</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+    <!--
+        Microsoft Cognitive Services Speech SDK for the browser.
+        Loaded from CDN. Exposes window.SpeechSDK at runtime.
+        We use it for Pronunciation Assessment (mic → score) without
+        ever uploading audio to our server.
+    -->
+    <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+</head>
+<body>
+
+<div class="app">
+
+    <!-- ── HEADER ────────────────────────────────────────────────── -->
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark" aria-hidden="true">🗣️</span>
+            <span class="brand-name">SpeakUp</span>
+        </div>
+        <div class="stats" id="stats">
+            <span class="stat" title="Day streak">
+                <span class="stat-icon">🔥</span>
+                <span class="stat-value" id="statStreak">0</span>
+            </span>
+            <span class="stat" title="Average score">
+                <span class="stat-icon">⭐</span>
+                <span class="stat-value" id="statAvg">—</span>
+            </span>
+            <span class="stat" title="Lessons done">
+                <span class="stat-icon">✓</span>
+                <span class="stat-value" id="statDone">0</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- ── HOME VIEW (category grid) ─────────────────────────────── -->
+    <section class="view" id="viewHome">
+        <h1 class="view-title">Pick a lesson</h1>
+        <p class="view-subtitle">
+            Native pronunciation in <strong>American English</strong> and
+            authentic <strong>Jordanian Arabic</strong> — listen, speak, get scored.
+        </p>
+
+        <div class="lang-tabs" role="tablist">
+            <button class="lang-tab is-active" data-filter="all"   role="tab">All</button>
+            <button class="lang-tab"           data-filter="ar-JO" role="tab">🇯🇴 Jordanian</button>
+            <button class="lang-tab"           data-filter="en-US" role="tab">🇺🇸 English</button>
+        </div>
+
+        <div class="category-grid" id="categoryGrid">
+            <!-- Cards injected by JS -->
+        </div>
+    </section>
+
+    <!-- ── LESSON VIEW (one phrase at a time) ────────────────────── -->
+    <section class="view hidden" id="viewLesson">
+
+        <div class="lesson-header">
+            <button class="back-btn" id="backBtn" aria-label="Back to lessons">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+                     stroke="currentColor" stroke-width="2.2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="20" y1="12" x2="4"  y2="12"></line>
+                    <polyline points="10 18 4 12 10 6"></polyline>
+                </svg>
+                Back
+            </button>
+            <div class="lesson-meta">
+                <span class="lesson-title"  id="lessonTitle">Lesson</span>
+                <span class="lesson-counter" id="lessonCounter">1 / 5</span>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="lessonProgressFill"></div>
+        </div>
+
+        <article class="phrase-card" id="phraseCard">
+            <div class="phrase-target" id="phraseTarget">—</div>
+            <div class="phrase-translation"     id="phraseTranslation"></div>
+            <div class="phrase-transliteration" id="phraseTransliteration"></div>
+
+            <div class="phrase-actions">
+                <button class="action-btn listen-btn" id="listenBtn"
+                        aria-label="Listen to native pronunciation">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <span>Listen</span>
+                </button>
+
+                <div class="speed-pill" role="group" aria-label="Playback speed">
+                    <button data-speed="0.7" class="speed-opt">0.7×</button>
+                    <button data-speed="1.0" class="speed-opt is-active">1×</button>
+                    <button data-speed="1.2" class="speed-opt">1.2×</button>
+                </div>
+
+                <button class="action-btn mic-btn" id="micBtn"
+                        aria-label="Tap and read the sentence aloud">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="2" width="6" height="12" rx="3"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8"  y1="23" x2="16" y2="23"/>
+                    </svg>
+                    <span>Speak</span>
+                </button>
+            </div>
+
+            <!-- Score panel (hidden until first attempt) -->
+            <div class="score-panel hidden" id="scorePanel">
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scoreNumber">0</span>
+                </div>
+                <div class="score-breakdown">
+                    <div class="score-row">
+                        <span class="score-label">Accuracy</span>
+                        <span class="score-value" id="scoreAccuracy">—</span>
+                    </div>
+                    <div class="score-row">
+                        <span class="score-label">Fluency</span>
+                        <span class="score-value" id="scoreFluency">—</span>
+                    </div>
+                    <div class="score-row">
+                        <span class="score-label">Completeness</span>
+                        <span class="score-value" id="scoreCompleteness">—</span>
+                    </div>
+                </div>
+                <div class="words-row" id="wordsRow"></div>
+                <p class="score-tip">
+                    💡 Tap a <span class="word-bad-sample">red</span> word to hear it again.
+                </p>
+            </div>
+
+            <div class="phrase-nav">
+                <button class="nav-btn nav-prev" id="prevBtn">← Previous</button>
+                <button class="nav-btn nav-next" id="nextBtn">Next →</button>
+            </div>
+        </article>
+
+    </section>
+
+</div>
+
+<!-- Toast notifications (errors, tips) -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Confetti canvas (only created when score ≥ 90) -->
+<canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

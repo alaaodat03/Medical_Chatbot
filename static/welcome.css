@@ -1,0 +1,422 @@
+/* ============================================================
+   MT° — Welcome / splash screen stylesheet
+   Why separate from style.css?
+     The splash is a full-bleed marketing hero (vivid blue). The chat
+     screen uses a different layout (pale workspace + floating bar).
+     Splitting files keeps each concern easy to edit and cache.
+   Palette (locked to reference):
+     --welcome-blue: #2D6BFF  (royal / primary)
+     --welcome-blue-soft: lighter gradients
+   ============================================================ */
+
+:root {
+    --welcome-blue: #2D6BFF;
+    --welcome-blue-mid: #5B8DFF;
+    --welcome-blue-deep: #1E4FCC;
+    --welcome-fab: #0F1729;
+    --welcome-fab-shadow: rgba(15, 23, 41, 0.45);
+    --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+/*
+  Solid bright blue field + soft lighter curves (NOT flat).
+  We stack two oversized radial gradients that drift slowly — GPU-friendly
+  because only transform/opacity animate on pseudo-elements elsewhere.
+*/
+.welcome-body {
+    min-height: 100%;
+    min-height: 100dvh;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    color: #fff;
+    background-color: var(--welcome-blue);
+    background-image:
+        radial-gradient(ellipse 120% 80% at 10% 0%, rgba(91, 141, 255, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 70% at 100% 100%, rgba(30, 79, 204, 0.45) 0%, transparent 50%),
+        linear-gradient(165deg, var(--welcome-blue) 0%, var(--welcome-blue-deep) 100%);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Arabic: Cairo reads more naturally than Latin-first fonts */
+html[dir="rtl"] .welcome-body {
+    font-family: "Cairo", "Plus Jakarta Sans", sans-serif;
+}
+
+/* Subtle film grain — opacity kept low for WCAG (doesn't darken text). */
+.welcome-grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.welcome-deco {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Bottom-left blob: light blue → transparent, very soft */
+.welcome-deco-blob {
+    position: absolute;
+    width: min(90vw, 420px);
+    height: min(90vw, 420px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(91, 141, 255, 0.35) 0%, transparent 70%);
+    filter: blur(40px);
+    opacity: 0.35;
+    animation: welcomeBlobDrift 28s ease-in-out infinite alternate;
+}
+.welcome-deco-blob--bl {
+    left: -25%;
+    bottom: -15%;
+}
+
+/* Center sparkle: slow rotation (60s) — barely noticeable, feels premium */
+.welcome-deco-star {
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+    width: min(85vw, 340px);
+    height: min(85vw, 340px);
+    opacity: 0.22;
+    animation: welcomeStarSpin 60s linear infinite, welcomeStarPulse 7s ease-in-out infinite;
+}
+.welcome-deco-star svg {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes welcomeBlobDrift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(8%, -6%) scale(1.08); }
+}
+@keyframes welcomeStarSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes welcomeStarPulse {
+    0%, 100% { opacity: 0.18; filter: blur(0); }
+    50%      { opacity: 0.26; filter: blur(1px); }
+}
+
+/* Dotted texture — white dots at very low opacity */
+.welcome-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.welcome-app {
+    position: relative;
+    z-index: 3;
+    min-height: 100dvh;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 20px calc(env(safe-area-inset-bottom, 0px) + 28px);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Top row ── */
+.welcome-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.welcome-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+}
+
+/* Rounded square + heart: matches "minimal health icon" brief */
+.welcome-logo-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+}
+.welcome-logo-heart {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/*
+  Heartbeat “pump” — transform-only so it stays smooth on mobile.
+  Two quick squeezes per cycle mimics a real lub–dub rhythm.
+*/
+@keyframes welcomeHeartPump {
+    0%, 100% { transform: scale(1); }
+    10%      { transform: scale(1.2); }
+    20%      { transform: scale(1); }
+    32%      { transform: scale(1.14); }
+    44%      { transform: scale(1); }
+}
+.welcome-heart-pump {
+    transform-origin: center center;
+    will-change: transform;
+    animation: welcomeHeartPump 1.35s ease-in-out infinite;
+}
+/* Logo + FAB hearts: small stagger so “here and here” read as two living beats */
+.welcome-logo-box .welcome-heart-pump {
+    animation-delay: 0s;
+}
+.welcome-fab .welcome-fab-btn .welcome-heart-pump {
+    animation-delay: 0.18s;
+}
+.welcome-logo-mt {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.welcome-logo-mt sup {
+    font-size: 7px;
+}
+
+/* Small online pulse — trust signal */
+.welcome-online {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+    animation: welcomeOnline 2s ease-out infinite;
+}
+@keyframes welcomeOnline {
+    0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5); }
+    70%  { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.welcome-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.welcome-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s var(--bounce), background 0.2s ease;
+}
+.welcome-icon-btn:hover  { transform: scale(1.05); background: rgba(255, 255, 255, 0.2); }
+.welcome-icon-btn:active { transform: scale(0.95); }
+.welcome-icon-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.welcome-lang-label {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.welcome-skip {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    padding: 8px 4px;
+    transition: opacity 0.2s ease;
+}
+.welcome-skip:hover { opacity: 1; color: #fff; }
+.welcome-skip:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 4px; }
+
+/* ── Hero typography ── */
+.welcome-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 8vh;
+    padding-top: 6vh;
+}
+
+.welcome-hero-title {
+    font-weight: 800;
+    font-size: clamp(2.25rem, 8vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.12);
+}
+
+.welcome-hero-line {
+    display: block;
+    overflow: hidden;
+}
+
+/* Staggered word reveal — each .welcome-word fades up */
+.welcome-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.6em);
+    animation: welcomeWordIn 0.75s var(--bounce) forwards;
+}
+.welcome-hero-line:nth-child(1) .welcome-word { animation-delay: 0.15s; }
+.welcome-hero-line:nth-child(2) .welcome-word { animation-delay: 0.35s; }
+.welcome-hero-line:nth-child(3) .welcome-word { animation-delay: 0.55s; }
+
+@keyframes welcomeWordIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-subtitle {
+    margin-top: 18px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 280px;
+    color: rgba(255, 255, 255, 0.88);
+    opacity: 0;
+    animation: welcomeFade 0.6s ease 0.85s forwards;
+}
+@keyframes welcomeFade {
+    to { opacity: 1; }
+}
+
+.welcome-info {
+    margin-bottom: 20px;
+}
+.welcome-info-text {
+    font-size: 12px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 320px;
+}
+
+/* ── Floating dark pill bar ── */
+.welcome-fab {
+    width: 92%;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--welcome-fab);
+    border-radius: 999px;
+    box-shadow:
+        0 12px 40px var(--welcome-fab-shadow),
+        0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(24px);
+    animation: welcomeFabIn 0.85s var(--bounce) 0.5s forwards;
+}
+@keyframes welcomeFabIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-fab-btn {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.92);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s var(--bounce), background 0.2s ease;
+}
+.welcome-fab-btn:hover  { transform: scale(1.08); background: rgba(255, 255, 255, 0.08); }
+.welcome-fab-btn:active { transform: scale(0.92); }
+.welcome-fab-btn:focus-visible {
+    outline: 2px solid var(--welcome-blue-mid);
+    outline-offset: 2px;
+}
+
+/* Center CTA — larger, emphasized */
+.welcome-fab-cta {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s var(--bounce), background 0.2s ease;
+    animation: welcomeCtaPulse 2.4s ease-in-out 1.4s infinite;
+}
+.welcome-fab-cta:hover  { transform: scale(1.05); background: rgba(255, 255, 255, 0.18); }
+.welcome-fab-cta:active { transform: scale(0.96); }
+.welcome-fab-cta:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+@keyframes welcomeCtaPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    50%      { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-word,
+    .welcome-subtitle,
+    .welcome-fab,
+    .welcome-fab-cta,
+    .welcome-deco-star,
+    .welcome-deco-blob,
+    .welcome-online,
+    .welcome-heart-pump {
+        animation: none !important;
+    }
+    .welcome-word {
+        opacity: 1;
+        transform: none;
+    }
+    .welcome-subtitle { opacity: 1; }
+    .welcome-fab {
+        opacity: 1;
+        transform: none;
+    }
+}

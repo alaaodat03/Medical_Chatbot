@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--
+  MT° — Welcome / splash screen
+  ───────────────────────────
+  Why a separate page?
+    • Matches premium health-app onboarding: full-bleed blue hero,
+      then the chat is a focused second screen.
+    • Keeps welcome.css tiny and the chat stylesheet (style.css) lean.
+  Flow: user lands on "/" → taps the center "next" control → "/chat".
+  Optional: localStorage "mt_skip_welcome" auto-forwards return visitors.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#2D6BFF" />
+    <title>MT° — Your health, made simple</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Cairo:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}" />
+</head>
+<body class="welcome-body">
+
+    <!-- Film grain: adds tactile depth without hurting contrast (opacity ~3%). -->
+    <div class="welcome-grain" aria-hidden="true"></div>
+
+    <!-- Decorative layers — pointer-events:none so taps pass through to buttons. -->
+    <div class="welcome-deco" aria-hidden="true">
+        <div class="welcome-deco-blob welcome-deco-blob--bl"></div>
+        <div class="welcome-deco-star">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <!-- Four soft "petals" = sparkle silhouette from the reference -->
+                <defs>
+                    <filter id="blurSparkle" x="-40%" y="-40%" width="180%" height="180%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="14" />
+                    </filter>
+                </defs>
+                <g filter="url(#blurSparkle)" fill="rgba(255,255,255,0.55)">
+                    <ellipse cx="100" cy="100" rx="72" ry="22" />
+                    <ellipse cx="100" cy="100" rx="22" ry="72" />
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <div class="welcome-app">
+        <!-- Top bar: logo + skip + language -->
+        <header class="welcome-top">
+            <a href="/chat" class="welcome-logo" id="welcomeLogo" aria-label="MT Medical Assistant">
+                <span class="welcome-logo-box">
+                    <svg class="welcome-logo-heart welcome-heart-pump" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    <span class="welcome-logo-mt">MT<sup>°</sup></span>
+                </span>
+                <span class="welcome-online" aria-hidden="true"></span>
+            </a>
+
+            <div class="welcome-top-actions">
+                <button type="button" class="welcome-icon-btn" id="welcomeLang"
+                        aria-label="Switch language" title="Language">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    <span id="welcomeLangLabel" class="welcome-lang-label">AR</span>
+                </button>
+                <a href="/chat" class="welcome-skip" id="welcomeSkip" data-i18n="skip">Skip</a>
+            </div>
+        </header>
+
+        <!-- Hero copy — three lines for impact (word-by-word animation in CSS). -->
+        <div class="welcome-hero" aria-live="polite">
+            <h1 class="welcome-hero-title">
+                <span class="welcome-hero-line"><span class="welcome-word" data-i18n="hero1">Your health</span></span>
+                <span class="welcome-hero-line"><span class="welcome-word" data-i18n="hero2">made</span></span>
+                <span class="welcome-hero-line"><span class="welcome-word" data-i18n="hero3">simple</span></span>
+            </h1>
+            <p class="welcome-subtitle" id="welcomeSubtitle" data-i18n="subtitle">
+                Talk to MT, your AI medical assistant
+            </p>
+        </div>
+
+        <section class="welcome-info" id="welcome-info" tabindex="-1">
+            <p class="welcome-info-text" data-i18n="infoShort">
+                General wellness info only — not a substitute for a doctor.
+            </p>
+        </section>
+
+        <!-- Floating dark pill — signature element from the reference UI. -->
+        <nav class="welcome-fab" aria-label="Primary actions">
+            <button type="button" class="welcome-fab-btn" id="welcomeAbout"
+                    aria-label="About this app" title="About">
+                <svg class="welcome-heart-pump" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </button>
+
+            <a href="/chat" class="welcome-fab-cta" id="welcomeStart" aria-label="Start chat">
+                <svg class="welcome-fab-chevron" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                     width="28" height="28" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6"/>
+                    <polyline points="15 18 21 12 15 6"/>
+                </svg>
+            </a>
+        </nav>
+    </div>
+
+    <script src="{{ url_for('static', filename='welcome.js') }}"></script>
+</body>
+</html>
